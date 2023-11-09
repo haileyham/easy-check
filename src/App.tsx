@@ -1,5 +1,5 @@
 import styled from 'styled-components';
-import React, { useState } from 'react';
+import React, { useState,useEffect } from 'react';
 
 function App() {
   const list = ["iceCream", "물받침대","물비우기","도구닦기","커피탕탕","커피망","커피통비우기","아슈크림마감","마카롱냉장고","창문닫기","분리수거","쓰레기버리기","커피마감1","커피마감2","커피마감3","커피머신청소","키오스크","TV","에어컨","얼음뚜껑","테이블닦기","쓸기&닦기","매장불끄기","문잠그기"]
@@ -14,10 +14,33 @@ function App() {
     setDone(복사done);
   }
 
+  // 시간
+  const [currentTime, setCurrentTime] = useState(new Date());
+
+  useEffect(() => {
+    const intervalId = setInterval(() => {
+      setCurrentTime(new Date());
+    }, 1000 * 60); // 1분마다 업데이트
+
+    return () => clearInterval(intervalId); // 컴포넌트 언마운트 시 clearInterval
+  }, []);
+
+  const formattedDateTime = currentTime.toLocaleString('en-US', {
+    year: 'numeric',
+    month: '2-digit',
+    day: '2-digit',
+    hour: '2-digit',
+    minute: '2-digit',
+  });
+
+
+  // 내보내기
   //txt
   const exportToFile = () => {
     const content = list.map((item, i) => `${item}: ${done[i] ? 'Done' : 'Not Done'}`).join('\n');
-    const blob = new Blob([content], { type: 'text/plain' });
+    const fullContent = `${currentTime}\n\n${content}`;
+
+    const blob = new Blob([fullContent], { type: 'text/plain' });
     const link = document.createElement('a');
     link.href = URL.createObjectURL(blob);
     link.download = 'checklist.txt';
@@ -50,6 +73,7 @@ function App() {
     <div>
       <Wrapper>
         <Container>
+            <Time>{formattedDateTime}</Time>
           <Header>
             <h1>Check</h1>
             <button onClick={copyToClipboard}>copy</button>
@@ -97,6 +121,14 @@ const Header = styled.nav`
       background-color: red;
     }
   }
+`
+
+const Time = styled.p`
+  color:#fcc1c1;
+  text-align: right;
+  padding-right:1rem;
+  margin: 0 0 5px;
+  font-size:14px;
 `
 
 const Main = styled.main`
