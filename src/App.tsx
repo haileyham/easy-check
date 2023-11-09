@@ -3,8 +3,18 @@ import React, { useState,useEffect } from 'react';
 
 function App() {
   const list = ["iceCream", "물받침대","물비우기","도구닦기","커피탕탕","커피망","커피통비우기","아슈크림마감","마카롱냉장고","창문닫기","분리수거","쓰레기버리기","커피마감1","커피마감2","커피마감3","커피머신청소","키오스크","TV","에어컨","얼음뚜껑","테이블닦기","쓸기&닦기","매장불끄기","문잠그기"]
-  const [done, setDone] = useState([false, false, false, false, false])
+  // const [done, setDone] = useState([false, false, false, false, false])
   
+  //LocalStorage 활용
+  const [done, setDone] = useState(() => {
+    const storedDone = localStorage.getItem('done');
+    return storedDone ? JSON.parse(storedDone) : Array(list.length).fill(false);
+  });
+
+  useEffect(() => {
+    localStorage.setItem('done', JSON.stringify(done));
+  }, [done]);
+
   const checkDone = (i:number) => {
     let 복사done = [...done];
     while (복사done.length < list.length) {
@@ -61,7 +71,7 @@ function App() {
   const copyToClipboard = () => {
     const textToCopy = list.map((item, i) => `${item}: ${done[i] ? 'Done' : 'Not Done'}`).join('\n');
     const fullContent = `${currentTime}\n\n${textToCopy}`;
-    
+
     navigator.clipboard.writeText(fullContent)
       .then(() => {
         console.log('Text copied to clipboard');
