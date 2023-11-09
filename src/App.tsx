@@ -2,13 +2,16 @@ import styled from 'styled-components';
 import React, { useState } from 'react';
 
 function App() {
-  const list = ["하하", "호호", 1, 2, 3, 4]
+  const list = ["iceCream", "물받침대","물비우기","도구닦기","커피탕탕","커피망","커피통비우기","아슈크림마감","마카롱냉장고","창문닫기","분리수거","쓰레기버리기","커피마감1","커피마감2","커피마감3","커피머신청소","키오스크","TV","에어컨","얼음뚜껑","테이블닦기","쓸기&닦기","매장불끄기","문잠그기"]
   const [done, setDone] = useState([false, false, false, false, false])
   
   const checkDone = (i:number) => {
-      let 복사done = [...done];
-      복사done[i] = !복사done[i];
-      setDone(복사done);
+    let 복사done = [...done];
+    while (복사done.length < list.length) {
+      복사done.push(false);
+    }
+    복사done[i] = !복사done[i];
+    setDone(복사done);
   }
 
   return (
@@ -73,7 +76,9 @@ const CheckListItem = styled.li<{ done: boolean }>`
   border-radius: 10px;
   text-align: center;
   line-height: 4.8rem;
-  background-color: ${(props) => (props.done ? '#d9aeff9d' : '#e2c0ff9d')};
+  border: 1px solid #daafff9d;
+  font-size:12px;
+  background-color: ${(props) => (props.done ? '#daafff9d' : '#ffffff')};
 `
 
 
