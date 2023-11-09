@@ -82,7 +82,7 @@ const Container = styled.div`
 
 const Header = styled.nav`
   width:100%;
-  height:10rem;
+  height:3rem;
   display: flex;
   align-items: center;
   justify-content: space-around;
@@ -110,7 +110,8 @@ const CheckList = styled.ul`
   gap:1rem;
   justify-content: space-around;
   flex-wrap: wrap;
-  border: 1px solid pink;
+  /* border: 1px solid pink; */
+  background-color: #ffe8ec;
   border-radius: 5px;
 `
 
