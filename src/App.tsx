@@ -60,7 +60,9 @@ function App() {
   //copy
   const copyToClipboard = () => {
     const textToCopy = list.map((item, i) => `${item}: ${done[i] ? 'Done' : 'Not Done'}`).join('\n');
-    navigator.clipboard.writeText(textToCopy)
+    const fullContent = `${currentTime}\n\n${textToCopy}`;
+    
+    navigator.clipboard.writeText(fullContent)
       .then(() => {
         console.log('Text copied to clipboard');
       })
