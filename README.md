@@ -1,46 +1,35 @@
-# Getting Started with Create React App
+# 📝 마감 체크리스트 애플리케이션
+친구의 요청으로 만든 간단한 마감 체크리스트 애플리케이션입니다. 이 애플리케이션을 사용하면 다양한 작업을 마감할 때 체크할 수 있으며, 체크한 항목들의 상태와 현재 시간을 기록하여 내보내기 가능합니다. 클라이언트 측에서만 사용되는 간단한 데이터의 저장이 필요한 경우에 유용하며, 서버 및 데이터베이스 연결이 필요하지 않습니다.
+- 주소(추가예정)
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+## 기능 구현
+1. 체크리스트 관리
+- 다양한 작업 항목을 체크하거나 체크 해제할 수 있음
+- useState 활용하여 각 리스트 체크하며 false / true
+- 각 항목은 "Done" 또는 "x(Not Done)" 상태를 가지고 있음
 
-## Available Scripts
+2. 실시간 시간 업데이트
+- 현재 날짜 및 시간 표시하기
+- 화면 우측 상단에는 현재 날짜와 시간이 실시간으로 표시
+- 1분마다 업데이트
+- toLocaleString 메서드를 사용하여 현재 날짜와 시간을 포맷팅하여 표시
 
-In the project directory, you can run:
+3. 내보내기 기능
+- copy, 내보내기 등을 통하여 (DB 연결 없이)필요 시 내역 저장 가능
+- 버튼 클릭 시, 현재 날짜 및 시간과 각 항목의 체크 상태를 포함한 내용을 텍스트 파일로 내보냄(copy,내보내기)
+- 내보내기 버튼을 클릭하면 텍스트 파일이 다운로드
+- Copy 버튼: 현재 체크리스트 항목 및 상태를 클립보드에 복사
+- 내보내기 버튼: 현재 체크리스트 항목 및 상태를 텍스트 파일(checklist.txt)로 내보냄
+- Excel 버튼: 현재 체크리스트 항목 및 상태를 CSV 파일(checklist.csv)로 내보냄
 
-### `npm start`
+4. 저장방식 : 로컬 스토리지 활용
+- localStorage를 사용하여 각 항목의 체크 상태를 브라우저에 저장하고 불러옴
+- 브라우저를 새로 고침해도 이전에 체크한 항목들의 상태가 유지
 
-Runs the app in the development mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in the browser.
+## 기술 스택
+- React
+- TypeScript
+- Styled-components
 
-The page will reload if you make edits.\
-You will also see any lint errors in the console.
-
-### `npm test`
-
-Launches the test runner in the interactive watch mode.\
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
-
-### `npm run build`
-
-Builds the app for production to the `build` folder.\
-It correctly bundles React in production mode and optimizes the build for the best performance.
-
-The build is minified and the filenames include the hashes.\
-Your app is ready to be deployed!
-
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
-
-### `npm run eject`
-
-**Note: this is a one-way operation. Once you `eject`, you can’t go back!**
-
-If you aren’t satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
-
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you’re on your own.
-
-You don’t have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn’t feel obligated to use this feature. However we understand that this tool wouldn’t be useful if you couldn’t customize it when you are ready for it.
-
-## Learn More
-
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
-
-To learn React, check out the [React documentation](https://reactjs.org/).
+## 참고
+이 애플리케이션은 클라이언트 측에서만 사용되는 간단한 데이터의 저장이 필요한 경우에 유용합니다. 서버 및 데이터베이스 연결이 필요하지 않습니다.
