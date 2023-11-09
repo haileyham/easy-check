@@ -4,7 +4,7 @@ import React, { useState,useEffect } from 'react';
 function App() {
   const list = ["iceCream", "물받침대","물비우기","도구닦기","커피탕탕","커피망","커피통비우기","아슈크림마감","마카롱냉장고","창문닫기","분리수거","쓰레기버리기","커피마감1","커피마감2","커피마감3","커피머신청소","키오스크","TV","에어컨","얼음뚜껑","테이블닦기","쓸기&닦기","매장불끄기","문잠그기"]
   // const [done, setDone] = useState([false, false, false, false, false])
-  
+
   //LocalStorage 활용
   const [done, setDone] = useState(() => {
     const storedDone = localStorage.getItem('done');
@@ -23,6 +23,11 @@ function App() {
     복사done[i] = !복사done[i];
     setDone(복사done);
   }
+
+  //All clear
+  const resetAll = () => {
+    setDone(Array(list.length).fill(false));
+  };
 
   // 시간
   const [currentTime, setCurrentTime] = useState(new Date());
@@ -47,7 +52,7 @@ function App() {
   // 내보내기
   //txt
   const exportToFile = () => {
-    const content = list.map((item, i) => `${item}: ${done[i] ? 'Done' : 'Not Done'}`).join('\n');
+    const content = list.map((item, i) => `${item}: ${done[i] ? 'Done' : 'x'}`).join('\n');
     const fullContent = `${currentTime}\n\n${content}`;
 
     const blob = new Blob([fullContent], { type: 'text/plain' });
@@ -59,7 +64,7 @@ function App() {
 
   //excel
   const exportToExcel = () => {
-    const csvContent = list.map((item, i) => `"${item}",${done[i] ? 'Done' : 'Not Done'}`).join('\n');
+    const csvContent = list.map((item, i) => `"${item}",${done[i] ? 'Done' : 'x'}`).join('\n');
     const blob = new Blob([`\uFEFF${csvContent}`], { type: 'text/csv;charset=utf-8;' });
     const link = document.createElement('a');
     link.href = URL.createObjectURL(blob);
@@ -69,8 +74,9 @@ function App() {
 
   //copy
   const copyToClipboard = () => {
-    const textToCopy = list.map((item, i) => `${item}: ${done[i] ? 'Done' : 'Not Done'}`).join('\n');
+    const textToCopy = list.map((item, i) => `${item}: ${done[i] ? 'Done' : 'x'}`).join('\n');
     const fullContent = `${currentTime}\n\n${textToCopy}`;
+  
 
     navigator.clipboard.writeText(fullContent)
       .then(() => {
@@ -88,6 +94,7 @@ function App() {
             <Time>{formattedDateTime}</Time>
           <Header>
             <h1>Check</h1>
+            <button onClick={resetAll}>reset</button>
             <button onClick={copyToClipboard}>copy</button>
             <button onClick={exportToFile}>내보내기</button>
           </Header>
@@ -107,13 +114,14 @@ function App() {
 export default App;
 
 const Wrapper = styled.div`
-  max-width: 1200px;
-  box-shadow: 0 0 10px black;
+  max-width: 500px;
+  margin:auto;
+  /* box-shadow: 0 0 10px black; */
 `
 
 const Container = styled.div`
   padding:2rem;
-  box-shadow: 0 0 10px gray;
+  /* box-shadow: 0 0 10px gray; */
 `
 
 const Header = styled.nav`
@@ -129,6 +137,7 @@ const Header = styled.nav`
     border-radius: 5px;
     color:#fff;
     background-color: #fcc1c1;
+    cursor: pointer;
     &:hover{
       background-color: red;
     }
@@ -167,6 +176,7 @@ const CheckListItem = styled.li<{ done: boolean }>`
   line-height: 4.8rem;
   border: 1px solid #daafff9d;
   font-size:12px;
+  cursor: pointer;
   background-color: ${(props) => (props.done ? '#daafff9d' : '#ffffff')};
 `
 
