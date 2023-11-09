@@ -14,13 +14,46 @@ function App() {
     setDone(복사done);
   }
 
+  //txt
+  const exportToFile = () => {
+    const content = list.map((item, i) => `${item}: ${done[i] ? 'Done' : 'Not Done'}`).join('\n');
+    const blob = new Blob([content], { type: 'text/plain' });
+    const link = document.createElement('a');
+    link.href = URL.createObjectURL(blob);
+    link.download = 'checklist.txt';
+    link.click();
+  };
+
+  //excel
+  const exportToExcel = () => {
+    const csvContent = list.map((item, i) => `"${item}",${done[i] ? 'Done' : 'Not Done'}`).join('\n');
+    const blob = new Blob([`\uFEFF${csvContent}`], { type: 'text/csv;charset=utf-8;' });
+    const link = document.createElement('a');
+    link.href = URL.createObjectURL(blob);
+    link.download = 'checklist.csv';
+    link.click();
+  };
+
+  //copy
+  const copyToClipboard = () => {
+    const textToCopy = list.map((item, i) => `${item}: ${done[i] ? 'Done' : 'Not Done'}`).join('\n');
+    navigator.clipboard.writeText(textToCopy)
+      .then(() => {
+        console.log('Text copied to clipboard');
+      })
+      .catch((err) => {
+        console.error('Unable to copy text to clipboard', err);
+      });
+  };
+
   return (
     <div>
       <Wrapper>
         <Container>
           <Header>
             <h1>Check</h1>
-            <p>내보내기</p>
+            <button onClick={copyToClipboard}>copy</button>
+            <button onClick={exportToFile}>내보내기</button>
           </Header>
           <Main>
             <CheckList>
@@ -53,6 +86,17 @@ const Header = styled.nav`
   display: flex;
   align-items: center;
   justify-content: space-around;
+  color:#fcc1c1;
+  button{
+    border: none;
+    padding:0.7rem;
+    border-radius: 5px;
+    color:#fff;
+    background-color: #fcc1c1;
+    &:hover{
+      background-color: red;
+    }
+  }
 `
 
 const Main = styled.main`
