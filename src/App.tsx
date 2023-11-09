@@ -2,6 +2,14 @@ import styled from 'styled-components';
 import React, { useState } from 'react';
 
 function App() {
+  const list = ["하하", "호호", 1, 2, 3, 4]
+  const [done, setDone] = useState([false, false, false, false, false])
+  
+  const checkDone = (i:number) => {
+      let 복사done = [...done];
+      복사done[i] = !복사done[i];
+      setDone(복사done);
+  }
 
   return (
     <div>
@@ -13,7 +21,9 @@ function App() {
           </Header>
           <Main>
             <CheckList>
-              <CheckListItem></CheckListItem>
+              {list.map((a,i) => {
+                return <CheckListItem key={a} done={done[i]} onClick={() => checkDone(i)}>{a}</CheckListItem>
+              })}
             </CheckList>
           </Main>
         </Container>
@@ -57,12 +67,13 @@ const CheckList = styled.ul`
   border-radius: 5px;
 `
 
-const CheckListItem = styled.li`
+const CheckListItem = styled.li<{ done: boolean }>`
   width:5rem;
   height:5rem;
   border-radius: 10px;
   text-align: center;
   line-height: 4.8rem;
+  background-color: ${(props) => (props.done ? '#d9aeff9d' : '#e2c0ff9d')};
 `
 
 
